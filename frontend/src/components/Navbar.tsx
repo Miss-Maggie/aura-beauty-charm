@@ -19,8 +19,8 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 w-full bg-card/80 backdrop-blur-md border-b border-border">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 text-xl font-bold tracking-tight text-foreground">
-          <span className="text-2xl">💇‍♀️</span>
-          Aura Beauty Studio <span className="text-lg">✨</span>
+          <img src="/logo.png" alt="Aura Beauty Charm Logo" className="h-8 w-auto object-contain" />
+          Aura Beauty Charm
         </Link>
 
         {/* Desktop */}
