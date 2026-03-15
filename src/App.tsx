@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Navbar from "@/components/Navbar";
 import Index from "./pages/Index";
+import Services from "./pages/Services";
 import Bookings from "./pages/Bookings";
 import NewBooking from "./pages/NewBooking";
 import BookingDetails from "./pages/BookingDetails";
@@ -21,6 +22,7 @@ const App = () => (
         <Navbar />
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/services" element={<Services />} />
           <Route path="/bookings" element={<Bookings />} />
           <Route path="/bookings/new" element={<NewBooking />} />
           <Route path="/bookings/:id" element={<BookingDetails />} />
