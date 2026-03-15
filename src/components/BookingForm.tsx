@@ -1,14 +1,26 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { api } from "@/lib/bookingStore";
 import { toast } from "@/hooks/use-toast";
 
-const services = ["Haircut", "Hair Coloring", "Beard Trim", "Wash & Blow Dry", "Deep Conditioning", "Bridal Styling", "Scalp Treatment", "Kids Haircut"];
+const services = ["Hair Styling", "Nail Art", "Facial Treatments", "Beard Grooming", "Hair Coloring", "Spa Package"];
 
 const BookingForm = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({ name: "", phone: "", service: services[0], date: "", time: "" });
+
+  const preselected = searchParams.get("service") || services[0];
+  const initialService = services.includes(preselected) ? preselected : services[0];
+
+  const [form, setForm] = useState({ name: "", phone: "", service: initialService, date: "", time: "" });
+
+  useEffect(() => {
+    const svc = searchParams.get("service");
+    if (svc && services.includes(svc)) {
+      setForm((prev) => ({ ...prev, service: svc }));
+    }
+  }, [searchParams]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
