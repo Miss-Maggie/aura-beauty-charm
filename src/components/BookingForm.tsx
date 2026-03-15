@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { api } from "@/lib/bookingStore";
 import { toast } from "@/hooks/use-toast";
 
-const services = ["Haircut", "Hair Coloring", "Beard Trim", "Wash & Blow Dry"];
+const services = ["Haircut", "Hair Coloring", "Beard Trim", "Wash & Blow Dry", "Deep Conditioning", "Bridal Styling", "Scalp Treatment", "Kids Haircut"];
 
 const BookingForm = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const BookingForm = () => {
     setLoading(true);
     try {
       await api.createBooking(form);
-      toast({ title: "Appointment booked!", description: `${form.service} on ${form.date} at ${form.time}` });
+      toast({ title: "Appointment booked! 🎉", description: `${form.service} on ${form.date} at ${form.time}` });
       navigate("/bookings");
     } catch {
       toast({ title: "Error", description: "Failed to create booking", variant: "destructive" });
@@ -32,7 +32,11 @@ const BookingForm = () => {
     "w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-ring/20 focus:border-primary outline-none transition-all";
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-lg mx-auto bg-card p-10 rounded-3xl shadow-elevated">
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-lg mx-auto bg-card p-10 rounded-3xl shadow-elevated border border-border">
+      <div className="text-center mb-2">
+        <span className="text-4xl">📅</span>
+      </div>
+
       <div className="space-y-2">
         <label className="text-sm font-medium text-muted-foreground ml-1">Full Name</label>
         <input name="name" required value={form.name} onChange={handleChange} className={inputClass} placeholder="Jane Doe" />
@@ -68,7 +72,7 @@ const BookingForm = () => {
         disabled={loading}
         className="w-full py-4 bg-primary text-primary-foreground font-semibold rounded-xl hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-50"
       >
-        {loading ? "Processing..." : "Confirm Appointment"}
+        {loading ? "Processing... ⏳" : "Confirm Appointment ✨"}
       </button>
     </form>
   );
