@@ -8,7 +8,7 @@ import { ArrowLeft } from "lucide-react";
 import { api } from "@/lib/bookingStore";
 import { toast } from "@/hooks/use-toast";
 
-const statuses["status"][] = ["Pending", "Confirmed", "Completed", "Cancelled"];
+const statuses = ["Pending", "Confirmed", "Completed", "Cancelled"];
 
 const statusColors = {
   Confirmed: "bg-primary/10 text-primary border-primary/20",
@@ -19,9 +19,9 @@ const statusColors = {
 
 export default function BookingDetails() {
   const params = useParams();
-  const id = params?.id as string;
+  const id = params?.id;
   const router = useRouter();
-  const [booking, setBooking] = useState<Booking | null>(null);
+  const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function BookingDetails() {
     });
   }, [id]);
 
-  const handleStatusUpdate = async (status["status"]) => {
+  const handleStatusUpdate = async (status) => {
     if (!id) return;
     await api.updateBooking(id, { status });
     setBooking((prev) => (prev ? { ...prev, status } : prev));

@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 3, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Miss%20Maggie/Desktop/Miss-Maggie/Projects/aura-beauty-charm/frontend/node_modules/.pnpm/next%4016.1.6_%40playwright%2Btes_bf71fc13a7da0b9ed116b55eaaa51c48/node_modules/next/app.js"],"sourcesContent":["module.exports = require('./dist/pages/_app')\n"],"names":[],"mappings":"AAAA,OAAO,OAAO","ignoreList":[0]}}]
-}

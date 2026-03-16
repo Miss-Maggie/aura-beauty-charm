@@ -9,7 +9,7 @@ import { api } from "@/lib/bookingStore";
 import { toast } from "@/hooks/use-toast";
 
 const Bookings = () => {
-  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const loadBookings = async () => {
@@ -23,13 +23,13 @@ const Bookings = () => {
     loadBookings();
   }, []);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id) => {
     await api.deleteBooking(id);
     toast({ title: "Booking deleted" });
     loadBookings();
   };
 
-  const handleStatusChange = async (id: string, status["status"]) => {
+  const handleStatusChange = async (id, status) => {
     await api.updateBooking(id, { status });
     toast({ title: "Status updated", description: `Changed to ${status}` });
     loadBookings();
@@ -65,6 +65,3 @@ const Bookings = () => {
 };
 
 export default Bookings;
-
-
-

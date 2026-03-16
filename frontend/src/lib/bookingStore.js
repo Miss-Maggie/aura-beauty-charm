@@ -35,7 +35,7 @@ export const api = {
   createBooking: async (data) => {
     await new Promise((r) => setTimeout(r, 300));
     const bookings = getBookings();
-    const booking = { ...data, id.now().toString(), status: "Pending" };
+    const booking = { ...data, id: Date.now().toString(), status: "Pending" };
     bookings.push(booking);
     saveBookings(bookings);
     return booking;
