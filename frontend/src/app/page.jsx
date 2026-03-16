@@ -1,17 +1,12 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { CalendarDays, Star } from "lucide-react";
 import FloatingEmoji from "@/components/FloatingEmoji";
 import ServiceCard from "@/components/ServiceCard";
-
-const services = [
-  { title: "Haircut", price: "$45", duration: "45 min", icon: "✂️" },
-  { title: "Hair Coloring", price: "$120", duration: "2 hours", icon: "🎨" },
-  { title: "Beard Trim", price: "$25", duration: "20 min", icon: "🪒" },
-  { title: "Wash & Blow Dry", price: "$35", duration: "30 min", icon: "💆" },
-];
+import { api } from "@/lib/bookingStore";
 
 const stats = [
   { value: "1000+", label: "Happy Clients 😊" },
@@ -20,11 +15,14 @@ const stats = [
 ];
 
 const Index = () => {
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    api.getServices().then(setServices).catch(console.error);
+  }, []);
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
       <section className="relative overflow-hidden min-h-[85vh] flex items-center justify-center">
-        {/* Floating emojis */}
         <FloatingEmoji emoji="✨" className="top-12 left-8 md:left-16" animationClass="animate-float" />
         <FloatingEmoji emoji="💅" className="top-32 right-12 md:right-24" animationClass="animate-float-delayed" />
         <FloatingEmoji emoji="💄" className="bottom-48 left-16 md:left-24" animationClass="animate-float-slow" />
@@ -38,12 +36,9 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
           >
-            {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border text-sm font-medium text-muted-foreground mb-8">
               🌸 Welcome to Your Beauty Sanctuary ✨
             </div>
-
-            {/* Heading */}
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground leading-[1.1] mb-2">
               <span className="text-muted-foreground">Aura Beauty</span>
             </h1>
@@ -51,12 +46,9 @@ const Index = () => {
               Your Beauty Journey 💫
             </h1>
 
-            {/* Description */}
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-2xl mx-auto">
               Transform yourself at our luxury salon. From stunning hair makeovers to relaxing spa treatments, we make every visit a magical experience! 🌟
             </p>
-
-            {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
               <Link
                 href="/bookings/new"
@@ -73,7 +65,6 @@ const Index = () => {
               </Link>
             </div>
 
-            {/* Stats */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -100,7 +91,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Services Section */}
       <section id="services" className="max-w-7xl mx-auto px-6 pb-24">
         <motion.div
           initial={{ opacity: 0 }}
@@ -126,7 +116,6 @@ const Index = () => {
           ))}
         </div>
 
-        {/* CTA below services */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -143,7 +132,6 @@ const Index = () => {
         </motion.div>
       </section>
 
-      {/* Footer */}
       <footer className="border-t border-border py-8">
         <div className="max-w-7xl mx-auto px-6 text-center text-sm text-muted-foreground">
           © 2026 Aura Beauty Studio. All rights reserved. ✨

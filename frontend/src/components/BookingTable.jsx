@@ -40,9 +40,9 @@ const BookingTable = ({ bookings, onDelete, onStatusChange }) => {
         </thead>
         <tbody className="divide-y divide-border">
           {bookings.map((b) => (
-            <tr key={b.id} className="hover:bg-accent/30 transition-colors group">
-              <td className="px-6 py-4 font-medium text-card-foreground">{b.name}</td>
-              <td className="px-6 py-4 text-muted-foreground">{b.service}</td>
+            <tr key={b._id} className="hover:bg-accent/30 transition-colors group">
+              <td className="px-6 py-4 font-medium text-card-foreground">{b.customerName}</td>
+              <td className="px-6 py-4 text-muted-foreground">{b.serviceId?.title || "N/A"}</td>
               <td className="px-6 py-4 tabular-nums text-muted-foreground">{b.date}</td>
               <td className="px-6 py-4 tabular-nums text-muted-foreground">{b.time}</td>
               <td className="px-6 py-4">
@@ -52,18 +52,18 @@ const BookingTable = ({ bookings, onDelete, onStatusChange }) => {
               </td>
               <td className="px-6 py-4">
                 <div className="flex items-center gap-2 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Link href={`/bookings/${b.id}`} className="p-1.5 rounded-lg hover:bg-accent text-primary transition-colors" title="View">
+                  <Link href={`/bookings/${b._id}`} className="p-1.5 rounded-lg hover:bg-accent text-primary transition-colors" title="View">
                     <Eye size={16} />
                   </Link>
                   <button
-                    onClick={() => onStatusChange(b.id, nextStatus[b.status])}
+                    onClick={() => onStatusChange(b._id, nextStatus[b.status])}
                     className="p-1.5 rounded-lg hover:bg-accent text-muted-foreground transition-colors"
                     title={`Change to ${nextStatus[b.status]}`}
                   >
                     <RefreshCw size={16} />
                   </button>
                   <button
-                    onClick={() => onDelete(b.id)}
+                    onClick={() => onDelete(b._id)}
                     className="p-1.5 rounded-lg hover:bg-destructive/10 text-destructive transition-colors"
                     title="Delete"
                   >

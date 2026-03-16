@@ -3,23 +3,29 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { api } from "@/lib/bookingStore";
 import { toast } from "@/hooks/use-toast";
 
-const services = ["Hair Styling", "Nail Art", "Facial Treatments", "Beard Grooming", "Hair Coloring", "Spa Package"];
-
 const BookingForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
+  const [services, setServices] = useState([]);
 
-  const preselected = searchParams.get("service") || services[0];
-  const initialService = services.includes(preselected) ? preselected : services[0];
-
-  const [form, setForm] = useState({ name: "", phone: "", service: initialService, date: "", time: "" });
+  const [form, setForm] = useState({ 
+    customerName: "", 
+    phoneNumber: "", 
+    serviceId: "", 
+    date: "", 
+    time: "" 
+  });
 
   useEffect(() => {
-    const svc = searchParams.get("service");
-    if (svc && services.includes(svc)) {
-      setForm((prev) => ({ ...prev, service: svc }));
-    }
+    api.getServices().then((svcs) => {
+      setServices(svcs);
+      const preselectedTitle = searchParams.get("service");
+      const initialSvc = svcs.find(s => s.title === preselectedTitle) || svcs[0];
+      if (initialSvc) {
+        setForm(prev => ({ ...prev, serviceId: initialSvc._id }));
+      }
+    }).catch(console.error);
   }, [searchParams]);
 
   const handleChange = (e) => {
@@ -31,10 +37,14 @@ const BookingForm = () => {
     setLoading(true);
     try {
       await api.createBooking(form);
-      toast({ title: "Appointment booked! 🎉", description: `${form.service} on ${form.date} at ${form.time}` });
+      const selectedSvc = services.find(s => s._id === form.serviceId);
+      toast({ 
+        title: "Appointment booked! 🎉", 
+        description: `${selectedSvc?.title} on ${form.date} at ${form.time}` 
+      });
       router.push("/bookings");
-    } catch {
-      toast({ title: "Error", description: "Failed to create booking", variant: "destructive" });
+    } catch (err) {
+      toast({ title: "Error", description: err.message || "Failed to create booking", variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -51,19 +61,19 @@ const BookingForm = () => {
 
       <div className="space-y-2">
         <label className="text-sm font-medium text-muted-foreground ml-1">Full Name</label>
-        <input name="name" required value={form.name} onChange={handleChange} className={inputClass} placeholder="Jane Doe" />
+        <input name="customerName" required value={form.customerName} onChange={handleChange} className={inputClass} placeholder="Jane Doe" />
       </div>
 
       <div className="space-y-2">
         <label className="text-sm font-medium text-muted-foreground ml-1">Phone Number</label>
-        <input name="phone" type="tel" required value={form.phone} onChange={handleChange} className={inputClass} placeholder="555-0100" />
+        <input name="phoneNumber" type="tel" required value={form.phoneNumber} onChange={handleChange} className={inputClass} placeholder="555-0100" />
       </div>
 
       <div className="space-y-2">
         <label className="text-sm font-medium text-muted-foreground ml-1">Service</label>
-        <select name="service" value={form.service} onChange={handleChange} className={inputClass}>
+        <select name="serviceId" value={form.serviceId} onChange={handleChange} className={inputClass}>
           {services.map((s) => (
-            <option key={s} value={s}>{s}</option>
+            <option key={s._id} value={s._id}>{s.title}</option>
           ))}
         </select>
       </div>
