@@ -59,7 +59,6 @@ A modern, high-end beauty salon management system designed to provide a premium 
 - **Local MongoDB**: It is assumed that MongoDB is running locally without authentication for development purposes.
 - **Single Currency**: All service prices currently assume a single currency ($) as provided in the initial design.
 - **Global Port Configuration**: The backend is hardcoded to port `3002` to avoid common conflicts with the frontend.
-- **JavaScript Preference**: The project was transitioned from TypeScript to JavaScript to align with user preference for a simpler codebase.
 
 ---
 
